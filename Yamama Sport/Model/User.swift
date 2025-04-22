@@ -22,7 +22,10 @@ struct User: Codable, Identifiable {
     var nationality: String?
     var stepRecords: [FootSteps]?
     var currentPosition: String?
-    var image: Data?
+    var image: String?
+    var imgURL: URL? {
+        URL(string: image ?? "")
+    }
     
     init(firstName: String? = nil, lastName: String? = nil, email: String? = nil, departement: String? = nil, dob: Date? = nil, gender: Gender? = nil, nationality: String? = nil, stepRecords: [FootSteps] = [], currentPosition: String? = nil) {
         self.firstName = firstName

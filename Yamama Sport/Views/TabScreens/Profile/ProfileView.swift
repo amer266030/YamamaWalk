@@ -12,17 +12,14 @@ struct ProfileView: View {
     
     var body: some View {
         VStack (spacing: 32) {
-            Image(systemName: "person")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .foregroundStyle(.white)
-                .padding()
-                .background(.appSecondary, in: .circle)
+            AsyncImageView(url: vm.user.imgURL)
             
-            VStack(spacing: 16) {
-                Text("\(vm.user.firstName ?? "") \(vm.user.lastName ?? "")")
+            VStack(spacing: 8) {
+                Text("Profile Picture")
+                    .bold()
                 Text(vm.user.nationality ?? "")
             }
+            .font(.subheadline)
             
             VStack(spacing: 16) {
                 CustomTextField(hint: "", value: .constant("\(vm.user.firstName ?? "") \(vm.user.lastName ?? "")"), canEdit: false)
@@ -31,7 +28,7 @@ struct ProfileView: View {
                 SegmentedTabView(selectedTab: $vm.gender)
                 
                 PrimaryButton(title: "Save", foregroundColor: .appPrimary, backgroundColor: Color.white.gradient) {
-                    
+                    Task { await vm.updateUser() }
                 }
                 .frame(width: UIScreen.main.bounds.width/3)
             }

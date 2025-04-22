@@ -46,8 +46,9 @@ struct TabScreenView: View {
                     }
                 }
                 .padding(.vertical)
-                .padding(.horizontal, 24)
-                .background(.white, in: .capsule)
+                .padding(.horizontal, 40)
+                .background(.bg.gradient, in: .capsule)
+                .shadow(radius: 1)
             }
             .padding(.horizontal, 32)
         }
