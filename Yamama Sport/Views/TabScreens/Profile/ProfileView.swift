@@ -1,0 +1,52 @@
+//
+//  ProfileView.swift
+//  Yamama Sport
+//
+//  Created by Amer Alyusuf on 22/04/2025.
+//
+
+import SwiftUI
+
+struct ProfileView: View {
+    @StateObject var vm = ProfileVM()
+    
+    var body: some View {
+        VStack (spacing: 32) {
+            Image(systemName: "person")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .foregroundStyle(.white)
+                .padding()
+                .background(.appSecondary, in: .circle)
+            
+            VStack(spacing: 16) {
+                Text("Name")
+                Text("Nationality")
+            }
+            
+            VStack(spacing: 16) {
+                CustomTextField(hint: "", value: .constant("\(vm.user.firstName ?? "") \(vm.user.lastName ?? "")"), canEdit: false)
+                CustomDatePicker(title: "Date of birth", hint: "Please Select", selectedDate: $vm.dob)
+                
+                SegmentedTabView(selectedTab: $vm.gender)
+                
+                PrimaryButton(title: "Save", foregroundColor: .appPrimary, backgroundColor: Color.white.gradient) {
+                    
+                }
+                .frame(width: UIScreen.main.bounds.width/3)
+            }
+            .padding(40)
+            .background(LinearGradient.primary, in: .rect(cornerRadii: .init(topLeading: 8, bottomLeading: 56, bottomTrailing: 56, topTrailing: 8)))
+        }
+    }
+}
+
+#Preview {
+    let x = DIContainer.shared
+    
+    ContentView()
+        .onAppear {
+            x.navMgr.selectedTab = .profile
+            x.navMgr.push(.tabBar)
+        }
+}
