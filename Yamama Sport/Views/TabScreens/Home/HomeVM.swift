@@ -25,21 +25,10 @@ class HomeVM: ObservableObject {
     @MainActor
     func updateSteps() async {
         x.popupMgr.showLoading()
-        defer { x.popupMgr.dismissLoading() }
+//        defer { x.popupMgr.dismissLoading() }
         
-        do {
-            let request = UpdateProfileRequest(img: nil, dob: dob, gender: gender)
-            let response : UpdateProfileResponse = try await ProfileAPI.sendRequest(to: .updateProfile(UpdateProfileRequest.self), body: request)
-            
-            x.appMgr.currentUser = response
-            x.popupMgr.showAppAlert(for: AppAlert.profileUpdated)
-        } catch let error as NetworkError {
-            if error == NetworkError.simulatorError { x.navMgr.push(.tabBar) } else {
-                x.popupMgr.showAppAlert(for: AppAlert.httpError(error))
-            }
-        } catch {
-            x.popupMgr.showAppAlert(for: AppAlert.unexpected(error))
-        }
+        // Get Steps from Health App
+        
     }
     
 }

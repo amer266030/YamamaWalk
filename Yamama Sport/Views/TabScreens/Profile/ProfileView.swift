@@ -20,8 +20,8 @@ struct ProfileView: View {
                 .background(.appSecondary, in: .circle)
             
             VStack(spacing: 16) {
-                Text("Name")
-                Text("Nationality")
+                Text("\(vm.user.firstName ?? "") \(vm.user.lastName ?? "")")
+                Text(vm.user.nationality ?? "")
             }
             
             VStack(spacing: 16) {
