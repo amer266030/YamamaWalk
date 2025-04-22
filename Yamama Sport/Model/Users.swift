@@ -8,7 +8,7 @@
 import Foundation
 
 struct Users: Codable {
-    var allUsers: [User]
+    var allUsers: [User]?
     
     init(allUsers: [User]) {
         self.allUsers = allUsers

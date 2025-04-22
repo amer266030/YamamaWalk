@@ -10,6 +10,7 @@ import Foundation
 enum ProfilePathParam {
     case updateProfile(UpdateProfileRequest.Type)
     case updateSteps(UpdateStepsRequest.Type)
+    case getUsers(GetUsersRequest.Type)
     case getProfile
     
     var path: String {
@@ -18,6 +19,8 @@ enum ProfilePathParam {
             return "update-profile"
         case .updateSteps:
             return "update-steps"
+        case .getUsers:
+            return "users"
         case .getProfile:
             return ""
         }

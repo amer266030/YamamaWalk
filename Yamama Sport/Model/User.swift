@@ -7,21 +7,24 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, Identifiable {
     // HTTP Response Attributes
     var accessToken: String?
     var pin: String?
     // Saved Attributes
+    var id: String? = UUID().uuidString
     var firstName: String?
     var lastName: String?
     var email: String?
+    var department: String?
     var dob: Date?
     var gender: Gender?
     var nationality: String?
     var stepRecords: [FootSteps]?
+    var currentPosition: String?
     var image: Data?
     
-    init(firstName: String? = nil, lastName: String? = nil, email: String? = nil, dob: Date? = nil, gender: Gender? = nil, nationality: String? = nil, stepRecords: [FootSteps] = []) {
+    init(firstName: String? = nil, lastName: String? = nil, email: String? = nil, departement: String? = nil, dob: Date? = nil, gender: Gender? = nil, nationality: String? = nil, stepRecords: [FootSteps] = [], currentPosition: String? = nil) {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email

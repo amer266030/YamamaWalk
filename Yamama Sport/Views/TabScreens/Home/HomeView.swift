@@ -18,7 +18,6 @@ struct HomeView: View {
             }
             PositionCardView(title: "Your position compared to your colleagues", position: "Fourth")
         }
-        .padding(.vertical, 40)
     }
     
     fileprivate func createGridItems(_ numItems: Int) -> [GridItem] {

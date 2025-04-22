@@ -24,6 +24,7 @@ struct TabScreenView: View {
 
                 ScrollView(.vertical) {
                     selectedTab.view
+                        .padding(.vertical, 40)
                 }
                 .scrollIndicators(.hidden)
                 
