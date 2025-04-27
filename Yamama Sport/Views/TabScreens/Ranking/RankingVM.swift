@@ -19,10 +19,10 @@ class RankingVM: ObservableObject {
         defer { x.popupMgr.dismissLoading() }
         
         do {
-            let request =  GetUsersRequest()
-            let response: GetUsersResponse = try await ProfileAPI.sendRequest(to: .getUsers(GetUsersRequest.self), body: request)
-            
-            allUsers = response.allUsers ?? []
+//            let request =  GetUsersRequest()
+//            let response: GetUsersResponse = try await ProfileAPI.sendRequest(to: .getUsers(GetUsersRequest.self), body: request)
+//            
+//            allUsers = response.allUsers ?? []
         } catch let error as NetworkError {
             if error == NetworkError.simulatorError { allUsers = x.mockData.allUsers } else {
                 x.popupMgr.showAppAlert(for: AppAlert.httpError(error))

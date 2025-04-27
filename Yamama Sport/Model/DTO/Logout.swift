@@ -7,10 +7,8 @@
 
 import Foundation
 
-struct LogoutRequest: Codable {
+// no logout
+struct LogoutRequest: Codable { }
 
-}
-
-struct LogoutResponse: Codable {
-    
-}
+// no logout
+struct LogoutResponse: Codable { }

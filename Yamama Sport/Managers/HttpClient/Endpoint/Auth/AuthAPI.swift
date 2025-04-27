@@ -9,8 +9,9 @@ import Foundation
 
 struct AuthAPI {
     private static let appMgr = AppMgr.shared
-    private static let baseURL = ""
+    private static let apiVersion = "/api/v1"
     private static let httpClient = HTTPClient()
+    private static let baseURL = "https://kadi-odyssey.com\(apiVersion)/auth"
 
     private static func buildURL(path: AuthPathParam) -> URL? {
         return URL(string: "\(baseURL)/\(path.path)")

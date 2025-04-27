@@ -19,7 +19,7 @@ struct UserRankCardView: View {
                     
                     VStack(alignment: .leading) {
                         HStack {
-                            Text("\(user.firstName ?? "") \(user.lastName ?? "")")
+                            Text(user.name ?? "")
                                 .font(.headline)
                                 .lineLimit(1)
                                 .fontWidth(.compressed)
@@ -42,7 +42,7 @@ struct UserRankCardView: View {
                         VStack {
                             Text("Steps Count")
                                 .lineLimit(2, reservesSpace: true)
-                            Text("\(user.averageSteps(forDaysBack: 365))")
+                            Text("200")
                         }
                         .frame(maxWidth: .infinity)
                         

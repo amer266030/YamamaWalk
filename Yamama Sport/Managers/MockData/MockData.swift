@@ -20,19 +20,31 @@ class MockData {
     
     private func fetchData() {
         fetchUser()
-        fetchUsers()
     }
     
     private func fetchUser() {
         currentUser = User(
-            firstName: "John",
-            lastName: "Doe",
+            id: 1,
+            name: "John",
             email: "jdoe@example.com",
-            departement: "HQ",
-            dob: Date.now,
+            phone: "1234",
             gender: .male,
-            nationality: "Saudi Arabia",
-            stepRecords: generateRandomSteps(days: 30)
+            roles: [UserRole(
+                createdAt: nil,
+                guardName: nil,
+                id: 1,
+                name: nil,
+                pivot: Pivot(
+                    modelId: 1,
+                    modelType: "",
+                    roleId: 1
+                ),
+                updatedAt: nil
+            )],
+            emailVerifiedAt: nil,
+            createdAt: nil,
+            updatedAt: nil,
+            deletedAt: nil
         )
     }
     
@@ -48,41 +60,6 @@ class MockData {
         }
 
         return steps
-    }
-    
-    private func fetchUsers() {
-        allUsers = [
-            User(
-                firstName: "Jack",
-                lastName: "Sparrow",
-                email: "jdoe@example.com",
-                departement: "HQ",
-                dob: Date.now,
-                gender: .male,
-                nationality: "Saudi Arabia",
-                stepRecords: generateRandomSteps(days: 15)
-            ),
-            User(
-                firstName: "Jane",
-                lastName: "Doe",
-                email: "jane@example.com",
-                departement: "Plant",
-                dob: Date.now,
-                gender: .male,
-                nationality: "Saudi Arabia",
-                stepRecords: generateRandomSteps(days: 10)
-            ),
-            User(
-                firstName: "James",
-                lastName: "Bond",
-                email: "bond@example.com",
-                departement: "HQ",
-                dob: Date.now,
-                gender: .male,
-                nationality: "Saudi Arabia",
-                stepRecords: generateRandomSteps(days: 12)
-            ),
-        ]
     }
     
 }

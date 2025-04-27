@@ -18,7 +18,7 @@ class ProfileVM: ObservableObject {
     init() {
         if x.appMgr.isPreview { user = x.mockData.currentUser ?? User() }
         else { user = x.appMgr.currentUser ?? User() }
-        dob = user.dob ?? .now
+//        dob = user.dob ?? .now
         gender = user.gender ?? .male
     }
     
@@ -28,11 +28,11 @@ class ProfileVM: ObservableObject {
         defer { x.popupMgr.dismissLoading() }
         
         do {
-            let request = UpdateProfileRequest(img: nil, dob: dob, gender: gender)
-            let response : UpdateProfileResponse = try await ProfileAPI.sendRequest(to: .updateProfile(UpdateProfileRequest.self), body: request)
-            
-            x.appMgr.currentUser = response
-            x.popupMgr.showAppAlert(for: AppAlert.profileUpdated)
+//            let request = UpdateProfileRequest(img: nil, dob: dob, gender: gender)
+//            let response : UpdateProfileResponse = try await ProfileAPI.sendRequest(to: .updateProfile(UpdateProfileRequest.self), body: request)
+//            
+//            x.appMgr.currentUser = response
+//            x.popupMgr.showAppAlert(for: AppAlert.profileUpdated)
         } catch let error as NetworkError {
             if error == NetworkError.simulatorError { x.navMgr.push(.tabBar) } else {
                 x.popupMgr.showAppAlert(for: AppAlert.httpError(error))

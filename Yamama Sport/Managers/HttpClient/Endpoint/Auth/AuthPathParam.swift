@@ -17,7 +17,7 @@ enum AuthPathParam {
         case .login:
             return "login"
         case .register:
-            return "register"
+            return "signup"
         case .logout:
             return "logout"
         }

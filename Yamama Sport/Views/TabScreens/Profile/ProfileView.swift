@@ -12,17 +12,17 @@ struct ProfileView: View {
     
     var body: some View {
         VStack (spacing: 32) {
-            AsyncImageView(url: vm.user.imgURL)
+            AsyncImageView(url: URL(string: ""))
             
             VStack(spacing: 8) {
                 Text("Profile Picture")
                     .bold()
-                Text(vm.user.nationality ?? "")
+                Text("Saudi")
             }
             .font(.subheadline)
             
             VStack(spacing: 16) {
-                CustomTextField(hint: "", value: .constant("\(vm.user.firstName ?? "") \(vm.user.lastName ?? "")"), canEdit: false)
+                CustomTextField(hint: "", value: .constant("\(vm.user.name ?? "")"), canEdit: false)
                 CustomDatePicker(title: "Date of birth", hint: "Please Select", selectedDate: $vm.dob)
                 
                 SegmentedTabView(selectedTab: $vm.gender)

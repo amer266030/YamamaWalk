@@ -30,13 +30,13 @@ class RegisterVM: ObservableObject {
             guard pin.count == 6 else { throw AuthError.invalidPin }
             guard didAgreeToTerms else { throw AuthError.mustAgreeToTerms }
             
-            let request = RegisterRequest(firstName: firstName, lastName: lastName, email: email, pin: pin)
+            let request = RegisterRequest(name: "", email: "", password: "", gender: .male, phone: "")
             let response: RegisterResponse = try await AuthAPI.sendRequest(to: .register(RegisterRequest.self), body: request)
             
-            guard let accessToken = response.accessToken else { throw AuthError.missingAccessToken }
+            guard let accessToken = response.token else { throw AuthError.missingAccessToken }
             
             x.appMgr.storeAccessToken(accessToken)
-            x.appMgr.currentUser = response
+            x.appMgr.currentUser = response.user
             
             x.navMgr.push(.tabBar)
         } catch let error as AuthError {

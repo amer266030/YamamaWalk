@@ -9,7 +9,11 @@ import Foundation
 
 struct LoginRequest: Codable {
     var email: String
-    var pin: String
+    var password: String
 }
 
-typealias LoginResponse = User
+struct LoginResponse: Codable {
+    let roles: [String]?
+    let token: String?
+    let user: User?
+}

@@ -10,8 +10,10 @@ import Foundation
 class LoginVM: ObservableObject {
     private let x = DIContainer.shared
     
-    var email: String = ""
-    var pin: String = ""
+    @Published var email: String = ""
+    @Published var pin: String = ""
+    
+    @Published var isEmailValid = false
     
     @MainActor
     func login() async throws {
@@ -19,16 +21,16 @@ class LoginVM: ObservableObject {
         defer { x.popupMgr.dismissLoading() }
         
         do {
-            guard !email.isEmpty else { throw AuthError.invalidEmail }
+            guard isEmailValid else { throw AuthError.invalidEmail }
             guard pin.count == 6 else { throw AuthError.invalidPin }
             
-            let request = LoginRequest(email: email, pin: pin)
+            let request = LoginRequest(email: email, password: pin)
             let response: LoginResponse = try await AuthAPI.sendRequest(to: .login(LoginRequest.self), body: request)
             
-            guard let accessToken = response.accessToken else { throw AuthError.missingAccessToken }
+            guard let accessToken = response.token else { throw AuthError.missingAccessToken }
             
             x.appMgr.storeAccessToken(accessToken)
-            x.appMgr.currentUser = response
+            x.appMgr.currentUser = response.user
             
             x.navMgr.push(.tabBar)
         } catch let error as AuthError {

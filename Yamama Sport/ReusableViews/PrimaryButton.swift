@@ -10,7 +10,7 @@ import SwiftUI
 struct PrimaryButton: View {
     var title: LocalizedStringKey
     var animation: Animation = .easeOut(duration: 0.5)
-    var foregroundColor: Color = .text
+    var foregroundColor: Color = .white
     var backgroundColor: AnyGradient = Color.blue.gradient
     var action: () -> Void
     

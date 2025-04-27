@@ -13,8 +13,8 @@ struct HomeView: View {
     var body: some View {
         VStack (alignment: .leading, spacing: 32) {
             LazyVGrid(columns: createGridItems(2), spacing: 16) {
-                StepsCardView(title: "Steps in the past 7 days", steps: vm.user.weeklyAverage)
-                StepsCardView(title: "Total Steps", steps: vm.user.averageSteps(forDaysBack: 365))
+                StepsCardView(title: "Steps in the past 7 days", steps: 100)
+                StepsCardView(title: "Total Steps", steps: 200)
             }
             PositionCardView(title: "Your position compared to your colleagues", position: "Fourth")
         }

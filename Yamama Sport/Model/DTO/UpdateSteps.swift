@@ -7,10 +7,13 @@
 
 import Foundation
 
-struct UpdateStepsRequest: Codable {
-    
+struct AddStepsRequest: Codable {
+    var eventId: String
+    var eventBranchId: String
+    var steps: String
+    var calories: String
 }
 
-struct UpdateStepsResponse: Codable {
+struct AddStepsResponse: Codable {
     
 }

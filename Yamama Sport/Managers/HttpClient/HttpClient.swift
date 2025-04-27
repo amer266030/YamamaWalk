@@ -8,6 +8,7 @@
 import Foundation
 
 struct HTTPClient: HTTPClientProtocol {
+    
     private let session: URLSession
     
     init() {
@@ -63,12 +64,20 @@ struct HTTPClient: HTTPClientProtocol {
         // Debug Print
         responseDebugPrint(statusCode: statusCode, data: data)
 
+        let result = try JSONDecoder().decode(Results<T>.self, from: data)
+        
         guard (200...299).contains(statusCode) else {
-            throw NetworkError.invalidResponse
+            if let errorResponse = result.errors {
+                throw NetworkError.errorResponse(errorResponse)
+            } else {
+                throw NetworkError.invalidResponse
+            }
         }
 
-        let result = try JSONDecoder().decode(T.self, from: data)
+        guard let extractedData = result.data else {
+            throw NetworkError.decodingError(NSError(domain: "No data field found in response", code: -1))
+        }
 
-        return result
+        return extractedData
     }
 }

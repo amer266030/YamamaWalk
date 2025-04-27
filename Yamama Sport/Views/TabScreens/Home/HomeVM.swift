@@ -18,7 +18,7 @@ class HomeVM: ObservableObject {
     init() {
         if x.appMgr.isPreview { user = x.mockData.currentUser ?? User() }
         else { user = x.appMgr.currentUser ?? User() }
-        dob = user.dob ?? .now
+//        dob = user.dob ?? .now
         gender = user.gender ?? .male
     }
     

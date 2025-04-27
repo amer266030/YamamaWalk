@@ -8,10 +8,11 @@
 import Foundation
 
 struct RegisterRequest: Codable {
-    var firstName: String
-    var lastName: String
+    var name: String
     var email: String
-    var pin: String
+    var password: String
+    var gender: Gender
+    var phone: String
 }
 
-typealias RegisterResponse = User
+typealias RegisterResponse = LoginResponse

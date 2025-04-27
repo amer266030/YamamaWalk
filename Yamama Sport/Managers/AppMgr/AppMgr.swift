@@ -16,6 +16,7 @@ final class AppMgr {
     static let shared = AppMgr()
     
     private init() {
+//        isPreview = true
         isPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
     }
     
