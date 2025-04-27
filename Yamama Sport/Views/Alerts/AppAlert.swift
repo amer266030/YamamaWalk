@@ -13,6 +13,7 @@ enum AppAlert: AppAlertProtocol {
     case httpError(NetworkError)
     case unexpected(Error)
     case profileUpdated
+    case healthKitError(Error)
     
     
     var iconName: String { "info.rectangle" }
@@ -35,6 +36,8 @@ enum AppAlert: AppAlertProtocol {
             return "Unexpeted Error"
         case .profileUpdated:
             return "Profile Updated"
+        case .healthKitError:
+            return "HealthKit Error"
         }
     }
     var titleColor: Color { .red }
@@ -51,6 +54,8 @@ enum AppAlert: AppAlertProtocol {
             return error.localizedDescription
         case .profileUpdated:
             return "Your profile has been updated successfully."
+        case .healthKitError(let error):
+            return "Could not connect to HealthKit. Please try again later.\n\nError: \(error.localizedDescription)"
         }
     }
     

@@ -9,9 +9,7 @@ import Foundation
 
 class MockData {
     
-    static let shared = MockData()
-    
-    private init() {
+    init() {
         fetchData()
     }
     

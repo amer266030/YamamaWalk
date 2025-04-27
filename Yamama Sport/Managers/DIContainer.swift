@@ -18,5 +18,6 @@ class DIContainer {
     lazy var appMgr = AppMgr.shared
     lazy var navMgr = NavMgr.shared
     lazy var popupMgr = PopupMgr.shared
-    lazy var mockData = MockData.shared
+    lazy var mockData = MockData()
+    lazy var healthKit = HealthKitMgr()
 }

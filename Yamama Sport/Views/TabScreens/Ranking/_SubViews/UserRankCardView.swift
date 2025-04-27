@@ -91,6 +91,8 @@ fileprivate func customDivider(height: CGFloat = 2) -> some View {
 }
 
 #Preview {
-    UserRankCardView(user: MockData.shared.currentUser ?? User())
+    let x = DIContainer.shared
+    
+    UserRankCardView(user: x.mockData.currentUser ?? User())
         .padding()
 }

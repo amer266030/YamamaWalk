@@ -13,7 +13,7 @@ struct EventAPI {
     private static let httpClient = HTTPClient()
     private static let baseURL = "https://kadi-odyssey.com\(apiVersion)"
     
-    static func buildURL(path: StepsPathParam? = nil) -> URL? {
+    static func buildURL(path: EventPathParam? = nil) -> URL? {
         var urlString = baseURL
         if let path = path {
             urlString += "/\(path.path)"
@@ -22,7 +22,7 @@ struct EventAPI {
         return components?.url
     }
     
-    static func sendRequest<T: Codable, U: Codable>(to path: StepsPathParam, body: T) async throws -> U {
+    static func sendRequest<U: Codable>(to path: EventPathParam) async throws -> U {
         
         guard let url = buildURL(path: path) else {
             throw NetworkError.badRequest
@@ -34,7 +34,6 @@ struct EventAPI {
             "token": appMgr.getAccessToken(),
         ]
         
-        let requestData = try JSONEncoder().encode(body)
         let resource = Resource(url: url, method: .get([]), headers: requestHeaders, modelType: U.self)
         
         return try await httpClient.load(resource)
