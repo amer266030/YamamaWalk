@@ -8,7 +8,7 @@
 import Foundation
 
 enum StepsPathParam {
-    case addSteps(AddStepsRequest.Type)
+    case addSteps
     case stepCounters
     case getRanking
     

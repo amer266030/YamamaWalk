@@ -10,8 +10,10 @@ import Foundation
 class HomeVM: ObservableObject {
     private let x = DIContainer.shared
     @Published var events = EventsResponse()
-    @Published var steps: Int?
-    @Published var calories: Int?
+    @Published var weekSteps: Int?
+    @Published var monthSteps: Int?
+    @Published var weekCalories: Int?
+    @Published var monthCalories: Int?
     
     init() {}
     
@@ -19,31 +21,15 @@ class HomeVM: ObservableObject {
     
     @MainActor
     func fetchStepsAndCalories(forPastDays days: Int) async {
-        async let steps = try? x.healthKit.fetchSteps(forPastDays: days)
-        async let calories = try? x.healthKit.fetchCalories(forPastDays: days)
+        async let weekSteps = try? x.healthKit.fetchSteps(forPastDays: 7)
+        async let monthSteps = try? x.healthKit.fetchSteps(forPastDays: 30)
+        async let weekCalories = try? x.healthKit.fetchCalories(forPastDays: 7)
+        async let monthCalories = try? x.healthKit.fetchCalories(forPastDays: 30)
         
-        self.steps = await steps ?? 0
-        self.calories = await calories ?? 0
-    }
-    
-    @MainActor
-    private func fetchSteps(forPastDays days: Int) async {
-        do {
-            let response = try await x.healthKit.fetchSteps(forPastDays: days)
-            self.steps = response
-        } catch {
-            x.popupMgr.showAppAlert(for: AppAlert.healthKitError(error))
-        }
-    }
-    
-    @MainActor
-    private func fetchCalories(forPastDays days: Int) async {
-        do {
-            let calories = try await x.healthKit.fetchCalories(forPastDays: days)
-            self.calories = calories
-        } catch {
-            x.popupMgr.showAppAlert(for: AppAlert.healthKitError(error))
-        }
+        self.weekSteps = await weekSteps ?? 0
+        self.monthSteps = await monthSteps ?? 0
+        self.weekCalories = await weekCalories ?? 0
+        self.monthCalories = await monthCalories ?? 0
     }
 
     // MARK: - API
@@ -58,7 +44,7 @@ class HomeVM: ObservableObject {
             self.events = response
         } catch let error as NetworkError {
             if error == NetworkError.simulatorError {
-                print(error)
+                // Implement MockData for Events
             } else {
                 x.popupMgr.showAppAlert(for: AppAlert.httpError(error))
             }
@@ -68,11 +54,25 @@ class HomeVM: ObservableObject {
     }
     
     @MainActor
-    func updateSteps() async {
+    private func updateSteps() async {
+        x.popupMgr.showLoading()
+        defer { x.popupMgr.dismissLoading() }
         
-        
-        // Get Steps from Health App
-        
+        do {
+            guard let monthSteps, let monthCalories else { throw StepsError.missingStepsData }
+            
+            let request = AddStepsRequest(eventId: "", eventBranchId: "", steps: "\(monthSteps)", calories: "\(monthCalories)")
+            let response: AddStepsResponse = try await StepsAPI.sendRequest(to: .addSteps, body: request)
+            
+        } catch let error as NetworkError {
+            if error == NetworkError.simulatorError {
+                // Implement MockData for Events
+            } else {
+                x.popupMgr.showAppAlert(for: AppAlert.httpError(error))
+            }
+        } catch {
+            x.popupMgr.showAppAlert(for: AppAlert.unexpected(error))
+        }
     }
     
 }

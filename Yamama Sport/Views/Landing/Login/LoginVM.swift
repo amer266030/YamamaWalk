@@ -10,9 +10,9 @@ import Foundation
 class LoginVM: ObservableObject {
     private let x = DIContainer.shared
     
-    @Published var email: String = ""
-    @Published var password: String = ""
-    @Published var isEmailValid = false
+    @Published var email: String = "j@example.com"
+    @Published var password: String = "Qwerty123?"
+    @Published var isEmailValid = true
     
     @MainActor
     func login() async throws {
@@ -20,7 +20,7 @@ class LoginVM: ObservableObject {
         defer { x.popupMgr.dismissLoading() }
         
         do {
-            guard isEmailValid else { throw AuthError.invalidEmail }
+            guard !email.isEmpty && isEmailValid else { throw AuthError.invalidEmail }
             guard password.count > 7 else { throw AuthError.invalidPin }
             
             let request = LoginRequest(email: email, password: password)
