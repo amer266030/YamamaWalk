@@ -8,6 +8,8 @@
 import Foundation
 
 struct ErrorResponse: Error, Codable {
+    var name: [String]?
+    var password: [String]?
     var email: [String]?
     var phone: [String]?
 }
@@ -15,6 +17,14 @@ struct ErrorResponse: Error, Codable {
 extension ErrorResponse: LocalizedError {
     var errorDescription: String? {
         var messages: [String] = []
+        
+        if let nameErrors = name, !nameErrors.isEmpty {
+            messages.append("Invalid Name")
+        }
+        
+        if let passwordErrors = password, !passwordErrors.isEmpty {
+            messages.append("Invalid Password")
+        }
         
         if let emailErrors = email, !emailErrors.isEmpty {
             messages.append("Email is already being used")

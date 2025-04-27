@@ -13,16 +13,21 @@ struct RegisterFormView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading) {
-                CustomTextField(hint: "first Name", value: $vm.firstName)
-                CustomTextField(hint: "last Name", value: $vm.lastName)
+                CustomTextField(hint: "name", value: $vm.name)
                 CustomTextField(hint: "email", value: $vm.email, type: .email) { isValid in
                     vm.isEmailValid = isValid
                 }
-                CustomTextField(hint: "pin", value: $vm.pin, characterLimit: 6)
-                Text("Use a 6 character pin with a mix of letters, numbers and symbols")
+                CustomTextField(hint: "password", value: $vm.password, characterLimit: 12)
+                Text("Use a 9 character password with a mix of letters, numbers and symbols")
                     .lineLimit(2, reservesSpace: true)
                     .font(.footnote)
                     .foregroundStyle(.bg)
+                
+                SegmentedTabView(selectedTab: $vm.gender)
+                
+                CustomTextField(hint: "5* *** ****", value: $vm.phone, type: .phone, characterLimit: 9) { isValid in
+                    
+                }
             }
             
             HStack(alignment: .firstTextBaseline) {

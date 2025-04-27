@@ -28,6 +28,9 @@ struct LoginView: View {
                 .scrollIndicators(.hidden)
             }
         }
+        .onTapGesture {
+            dismissKeyboard()
+        }
     }
 }
 

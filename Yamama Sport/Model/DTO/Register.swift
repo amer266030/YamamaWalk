@@ -15,4 +15,4 @@ struct RegisterRequest: Codable {
     var phone: String
 }
 
-typealias RegisterResponse = LoginResponse
+typealias RegisterResponse = AuthResponse

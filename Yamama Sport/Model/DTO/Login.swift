@@ -12,8 +12,4 @@ struct LoginRequest: Codable {
     var password: String
 }
 
-struct LoginResponse: Codable {
-    let roles: [String]?
-    let token: String?
-    let user: User?
-}
+typealias LoginResponse = AuthResponse

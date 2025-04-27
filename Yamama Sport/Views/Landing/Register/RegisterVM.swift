@@ -10,10 +10,11 @@ import Foundation
 class RegisterVM: ObservableObject {
     private let x = DIContainer.shared
     
-    @Published var firstName: String = ""
-    @Published var lastName: String = ""
+    @Published var name: String = ""
     @Published var email: String = ""
-    @Published var pin: String = ""
+    @Published var password: String = ""
+    @Published var gender: Gender = .male
+    @Published var phone: String = ""
     
     @Published var isEmailValid = false
     @Published var didAgreeToTerms = false
@@ -24,13 +25,12 @@ class RegisterVM: ObservableObject {
         defer { x.popupMgr.dismissLoading() }
         
         do {
-            guard !firstName.isEmpty else { throw AuthError.firstNameRequired }
-            guard !lastName.isEmpty else { throw AuthError.lastNameRequired }
+            guard !name.isEmpty else { throw AuthError.nameRequired }
             guard isEmailValid else { throw AuthError.invalidEmail }
-            guard pin.count == 6 else { throw AuthError.invalidPin }
+            guard password.count > 7 else { throw AuthError.invalidPin }
             guard didAgreeToTerms else { throw AuthError.mustAgreeToTerms }
             
-            let request = RegisterRequest(name: "", email: "", password: "", gender: .male, phone: "")
+            let request = RegisterRequest(name: name, email: email, password: password, gender: gender, phone: phone)
             let response: RegisterResponse = try await AuthAPI.sendRequest(to: .register(RegisterRequest.self), body: request)
             
             guard let accessToken = response.token else { throw AuthError.missingAccessToken }

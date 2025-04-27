@@ -26,9 +26,9 @@ struct AuthAPI {
         let requestData = try JSONEncoder().encode(body)
         
         let requestHeaders = [
+            "Authorization": "Bearer \(appMgr.getAccessToken())",
             "Content-Type": "application/json",
-            "lang": "en",
-            "token": appMgr.getAccessToken(),
+            "Accept": "*/*"
         ]
         
         let resource = Resource(url: url, method: .post(requestData), headers: requestHeaders, modelType: U.self)

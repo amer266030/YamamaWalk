@@ -8,8 +8,7 @@
 import Foundation
 
 enum AuthError: Error {
-    case firstNameRequired
-    case lastNameRequired
+    case nameRequired
     case invalidEmail
     case invalidPin
     case missingAccessToken
@@ -19,10 +18,8 @@ enum AuthError: Error {
 extension AuthError: LocalizedError {
     var errorDescription: String? {
         switch self {
-        case .firstNameRequired:
-            return "First Name is Required"
-        case .lastNameRequired:
-            return "Last Name is Required"
+        case .nameRequired:
+            return "Name is Required"
         case .invalidEmail:
             return "Invalid Email Entry"
         case .invalidPin:

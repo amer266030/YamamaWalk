@@ -42,6 +42,7 @@ struct CustomTextField: View {
                     TextField(hint, text: $value)
                         .textFieldStyle(.plain)
                         .keyboardType(type.keyboardType)
+                        .autocapitalization(.none)
                         .onChange(of: value) {
                             if let limit = characterLimit, value.count > limit {
                                 value = String(value.prefix(limit))

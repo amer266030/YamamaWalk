@@ -14,7 +14,7 @@ struct LoginFormView: View {
         CustomTextField(hint: "email", value: $vm.email, type: .email) { isValid in
             vm.isEmailValid = isValid
         }
-        CustomTextField(hint: "pin", value: $vm.pin, characterLimit: 6)
+        CustomTextField(hint: "password", value: $vm.password, characterLimit: 12)
         
         PrimaryButton(title: "Login") {
             Task { try await vm.login() }

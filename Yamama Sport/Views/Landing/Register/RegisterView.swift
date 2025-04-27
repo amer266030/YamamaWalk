@@ -27,6 +27,7 @@ struct RegisterView: View {
                 }
             }
         }
+        .onTapGesture { dismissKeyboard() }
     }
 }
 

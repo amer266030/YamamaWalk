@@ -11,8 +11,7 @@ class LoginVM: ObservableObject {
     private let x = DIContainer.shared
     
     @Published var email: String = ""
-    @Published var pin: String = ""
-    
+    @Published var password: String = ""
     @Published var isEmailValid = false
     
     @MainActor
@@ -22,9 +21,9 @@ class LoginVM: ObservableObject {
         
         do {
             guard isEmailValid else { throw AuthError.invalidEmail }
-            guard pin.count == 6 else { throw AuthError.invalidPin }
+            guard password.count > 7 else { throw AuthError.invalidPin }
             
-            let request = LoginRequest(email: email, password: pin)
+            let request = LoginRequest(email: email, password: password)
             let response: LoginResponse = try await AuthAPI.sendRequest(to: .login(LoginRequest.self), body: request)
             
             guard let accessToken = response.token else { throw AuthError.missingAccessToken }
