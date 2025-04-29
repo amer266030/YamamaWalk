@@ -12,14 +12,14 @@ struct ForgotPinView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Forgot Pin?")
             HStack {
-                Text("New User?")
+                Text("Don't have an account?")
                 AnimatedButton {
                     vm.navigateToRegister()
                 } label: {
-                    Text("Register")
+                    Text("Create Account")
                         .underline()
+                        .fontWeight(.semibold)
                 }
             }
         }

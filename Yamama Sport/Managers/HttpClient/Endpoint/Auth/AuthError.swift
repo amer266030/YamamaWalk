@@ -23,7 +23,7 @@ extension AuthError: LocalizedError {
         case .invalidEmail:
             return "Invalid Email Entry"
         case .invalidPin:
-            return "Invalid PIN Entry"
+            return "Invalid Password Entry"
         case .missingAccessToken:
             return "Access token is missing from the response!"
         case .mustAgreeToTerms:

@@ -15,6 +15,7 @@ class RegisterVM: ObservableObject {
     @Published var password: String = ""
     @Published var gender: Gender = .male
     @Published var phone: String = ""
+    @Published var department: Department = .headOffice
     
     @Published var isEmailValid = false
     @Published var didAgreeToTerms = false
@@ -37,6 +38,7 @@ class RegisterVM: ObservableObject {
             
             x.appMgr.storeAccessToken(accessToken)
             x.appMgr.currentUser = response.user
+            x.appMgr.department = self.department
             
             x.navMgr.push(.tabBar)
         } catch let error as AuthError {

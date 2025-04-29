@@ -17,15 +17,7 @@ struct HeaderView: View {
             
             Spacer()
             
-            Menu {
-                Button {
-                    action()
-                } label: {
-                    Text("Logout")
-                }
-            } label: {
-                Image(systemName: "line.3.horizontal")
-            }
+            LanguageButton(titleColor: .black)
         }
         .font(.headline)
         .foregroundStyle(.appSecondary)

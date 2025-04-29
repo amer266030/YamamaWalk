@@ -19,7 +19,7 @@ struct LoginView: View {
             VStack {
                 ScrollView(.vertical) {
                     VStack(alignment: .leading, spacing: 32) {
-                        LogoView()
+                        LogoView(padding: 40)
                         LoginFormView(vm: vm)
                         ForgotPinView(vm: vm)
                     }

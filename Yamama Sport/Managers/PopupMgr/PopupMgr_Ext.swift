@@ -27,8 +27,8 @@ extension PopupMgr {
     private func showAppAlert(
         iconName: String = "info.circle",
         iconColor: Color = .red,
-        title: String = "Error",
-        msg: String,
+        title: LocalizedStringKey = "Error",
+        msg: LocalizedStringKey,
         attributedMsg: AttributedString? = nil,
         secondaryBtnTitle: String? = nil,
         secondaryBtnAction: (() -> Void)? = nil,

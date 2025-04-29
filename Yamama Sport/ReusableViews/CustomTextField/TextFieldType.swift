@@ -12,6 +12,7 @@ enum TextFieldType {
     case phone
     case numbers
     case standard
+    case pwd
     
     var keyboardType: UIKeyboardType {
         switch self {
@@ -21,7 +22,7 @@ enum TextFieldType {
             return .phonePad
         case .numbers:
             return .numberPad
-        case .standard:
+        case .standard, .pwd:
             return .default
         }
     }
@@ -34,7 +35,7 @@ enum TextFieldType {
             return Validations.validate(type: .phone(value))
         case .numbers:
             return Validations.validate(type: .none)
-        case .standard:
+        case .standard, .pwd:
             return Validations.validate(type: .nonEmpty(value))
         }
     }

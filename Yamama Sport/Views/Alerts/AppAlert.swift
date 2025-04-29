@@ -24,10 +24,10 @@ enum AppAlert: AppAlertProtocol {
         }
     }
 
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
         case .invalidPin:
-            return "Invalid Pin"
+            return "Invalid Password"
         case .authError:
             return "Auth Error"
         case .httpError:
@@ -35,25 +35,25 @@ enum AppAlert: AppAlertProtocol {
         case .unexpected:
             return "Unexpeted Error"
         case .profileUpdated:
-            return "Profile Updated"
+            return ""
         case .healthKitError:
             return "HealthKit Error"
         }
     }
     var titleColor: Color { .red }
 
-    var message: String {
+    var message: LocalizedStringKey {
         switch self {
         case .invalidPin:
-            return "Please make sure you entered the correct pin."
+            return "Please make sure you entered the correct password."
         case .authError(let error):
-            return error.localizedDescription
+            return "\(error.localizedDescription)"
         case .httpError(let error):
-            return error.localizedDescription
+            return "\(error.localizedDescription)"
         case .unexpected(let error):
-            return error.localizedDescription
+            return "\(error.localizedDescription)"
         case .profileUpdated:
-            return "Your profile has been updated successfully."
+            return ""
         case .healthKitError(let error):
             return "Could not connect to HealthKit. Please try again later.\n\nError: \(error.localizedDescription)"
         }

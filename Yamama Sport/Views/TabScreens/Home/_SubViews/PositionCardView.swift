@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PositionCardView: View {
-    var title: String
+    var title: LocalizedStringKey
     var position: String
     
     var body: some View {
@@ -20,6 +20,7 @@ struct PositionCardView: View {
                     Text(title)
                         .font(.headline)
                         .lineLimit(2, reservesSpace: true)
+                        .multilineTextAlignment(.center)
                     
                     Image(systemName: "medal")
                         .resizable()

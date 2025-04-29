@@ -21,4 +21,12 @@ enum Gender: String, Identifiable, CaseIterable, Codable, TabItemProtocol {
             return "Female"
         }
     }
+    
+    var imgStr: String {
+        switch self {
+        case .male: "figure.stand"
+        case .female: "figure.stand.dress"
+        }
+    }
+    
 }

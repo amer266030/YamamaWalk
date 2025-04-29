@@ -11,83 +11,72 @@ struct UserRankCardView: View {
     var user: User
     
     var body: some View {
-        VStack {
-            Grid {
-                GridRow {
-                    Text("")
-                        .gridCellColumns(1)
+        VStack(spacing: 16) {
+            // Header
+            HStack {
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .frame(width: 18, height: 18)
+                    .foregroundStyle(.bg)
+                    .padding()
+                    .background(LinearGradient.primary, in: .circle)
+                    .gridCellColumns(1)
+                
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(user.name ?? "")
+                        .lineLimit(1)
+                        .font(.headline)
+                        .fontWidth(.compressed)
+                        .foregroundStyle(.appPrimary)
                     
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(user.name ?? "")
-                                .font(.headline)
-                                .lineLimit(1)
-                                .fontWidth(.compressed)
-                            Spacer()
-                        }
-                        customDivider()
-                    }
-                    .gridCellColumns(6)
+                    Divider()
+                        .frame(width: 60, height: 2)
+                        .background(Color.appPrimary)
                 }
-                GridRow {
-                    Image(systemName: "person.fill")
-                        .resizable()
-                        .frame(width: 18, height: 18)
-                        .foregroundStyle(.bg)
-                        .padding()
-                        .background(LinearGradient.primary, in: .circle)
-                        .gridCellColumns(1)
-                    
-                    HStack {
-                        VStack {
-                            Text("Steps Count")
-                                .lineLimit(2, reservesSpace: true)
-                            Text("200")
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        customDivider()
-                        
-                        VStack {
-                            Text("Department")
-                                .lineLimit(2, reservesSpace: true)
-                            Text("\(user.department ?? "")")
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        customDivider()
-                    }
-                    .gridCellColumns(6)
-                    
-                    HStack {
-                        
-                        VStack {
-                            Text("Fourth Position")
-                                .lineLimit(2, reservesSpace: true)
-                            Text("")
-                        }
-                        
-                        Spacer()
-                        
-                        Image(systemName: "star.fill")
-                            .font(.title)
-                            .foregroundStyle(.yellow.gradient)
-                    }
-                    .gridCellColumns(3)
-                }
+                Spacer()
             }
-            customDivider(height: 5)
+            // Info Items
+            HStack {
+                infoItemView(title: "Steps Count", value: "200")
+                Divider()
+                    .frame(width: 2, height: 40)
+                    .background(.gray.opacity(0.2))
+                infoItemView(title: "Department", value: Department.factory.strValue)
+                Divider()
+                    .frame(width: 2, height: 40)
+                    .background(.gray.opacity(0.2))
+                infoItemView(title: "Position", value: "5th")
+            }
         }
-        .font(.caption)
-        .foregroundStyle(.appPrimary)
-        .aspectRatio(3, contentMode: .fit)
+        .padding()
+        .background {
+            RoundedRectangle(cornerRadius: 16)
+                .fill(
+                    .white
+                        .shadow(.inner(color: .black.opacity(0.5), radius: 2, x: 0, y: -2))
+                        .shadow(.drop(color: .black.opacity(0.2), radius: 3, x: 0, y: 2))
+                )
+            
+            
+        }
+        
     }
 }
 
-fileprivate func customDivider(height: CGFloat = 2) -> some View {
-    Divider()
-        .frame(minWidth: height, minHeight: height)
-        .background(Color.appPrimary)
+fileprivate func infoItemView(title: LocalizedStringKey, value: LocalizedStringKey) -> some View {
+    VStack {
+        Text(title)
+            .font(.caption)
+            .foregroundStyle(.gray)
+            .lineLimit(1)
+            
+        Text(value)
+            .font(.footnote)
+            .bold()
+            .foregroundStyle(.appPrimary)
+            .lineLimit(1)
+    }
+    .frame(maxWidth: .infinity)
 }
 
 #Preview {

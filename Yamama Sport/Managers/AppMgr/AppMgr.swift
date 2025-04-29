@@ -9,6 +9,11 @@ import SwiftUI
 import KeychainSwift
 
 final class AppMgr {
+    // MARK: - Auth
+    @AppStorage("email") var email: String = ""
+    @AppStorage("pwd") var pwd: String = ""
+    @AppStorage("dept") var department: Department = .headOffice
+    
     private let keychain = KeychainSwift()
     var isPreview: Bool = false
     var currentUser: User?
@@ -26,5 +31,16 @@ final class AppMgr {
     
     func getAccessToken() -> String {
         keychain.get(UserKeys.accessToken) as String? ?? ""
+    }
+    
+    func saveCredentials(email: String, pwd: String) {
+        self.email = email
+        self.pwd = pwd
+    }
+    
+    func resetCredentials() {
+        self.email = ""
+        self.pwd = ""
+        self.currentUser = nil
     }
 }

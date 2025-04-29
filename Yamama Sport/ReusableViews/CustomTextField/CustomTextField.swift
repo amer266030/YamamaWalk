@@ -11,6 +11,8 @@ struct CustomTextField: View {
     @State private var showError = false
     @State private var errorMessage: String?
     
+    @State private var showPwd = false
+    
     var hint: LocalizedStringKey
     @Binding var value: String
     
@@ -18,6 +20,8 @@ struct CustomTextField: View {
     var canEdit = true
     var type: TextFieldType = .standard
     var characterLimit: Int?
+    
+    var hintIcon: String = "pencil"
     
     var onValidate: ((Bool) -> Void)?
     
@@ -32,23 +36,35 @@ struct CustomTextField: View {
             
             // MARK: - TextField
             HStack(alignment: .firstTextBaseline) {
-                if type == .phone {
-                    Text("+966")
-                        .font(.subheadline)
-                        .foregroundStyle(.black)
-                }
+                
+                Image(systemName: hintIcon)
+                    .font(.title3)
+                    .bold()
+                    .foregroundStyle(.text)
+                
+//                if type == .phone {
+//                    Text("+966")
+//                        .font(.subheadline)
+//                        .foregroundStyle(.black)
+//                }
                 
                 ZStack {
-                    TextField(hint, text: $value)
-                        .textFieldStyle(.plain)
-                        .keyboardType(type.keyboardType)
-                        .autocapitalization(.none)
-                        .onChange(of: value) {
-                            if let limit = characterLimit, value.count > limit {
-                                value = String(value.prefix(limit))
-                            }
-                            validateField(value)
+                    Group {
+                        if type == .pwd {
+                            SecureField(hint, text: $value)
+                        } else {
+                            TextField(hint, text: $value)
                         }
+                    }
+                    .textFieldStyle(.plain)
+                    .keyboardType(type.keyboardType)
+                    .autocapitalization(.none)
+                    .onChange(of: value) { _ in
+                        if let limit = characterLimit, value.count > limit {
+                            value = String(value.prefix(limit))
+                        }
+                        validateField(value)
+                    }
                     
                     // MARK: - Error indicator overlay
                     if showError {
@@ -60,12 +76,25 @@ struct CustomTextField: View {
                         .padding(4)
                         .environment(\.layoutDirection, .leftToRight)
                     }
+                    
+                    if type == .pwd {
+                        HStack {
+                            Spacer()
+                            Button {
+                                showPwd.toggle()
+                            } label: {
+                                Image(systemName: showPwd ? "eye.fill" : "eye.slash.fill")
+                                    .foregroundStyle(.black)
+                            }
+                        }
+                        .padding(4)
+                    }
                 }
             }
             .allowsHitTesting(canEdit)
             .foregroundStyle(.appPrimary)
             .padding()
-            .background(.bg, in: .rect(cornerRadius: 8))
+            .background(.bg, in: .rect(cornerRadius: 16))
         }
     }
     

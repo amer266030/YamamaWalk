@@ -10,8 +10,8 @@ import SwiftUI
 protocol AppAlertProtocol {
     var iconName: String { get }
     var iconColor: Color { get }
-    var title: String { get }
-    var message: String { get }
+    var title: LocalizedStringKey { get }
+    var message: LocalizedStringKey { get }
     var primaryBtnTitle: String { get }
     var primaryBtnAction: (() -> Void)? { get }
     var secondaryBtnTitle: String? { get }

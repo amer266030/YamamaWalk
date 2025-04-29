@@ -11,29 +11,31 @@ struct ProfileView: View {
     @StateObject var vm = ProfileVM()
     
     var body: some View {
-        VStack (spacing: 32) {
+        VStack {
             AsyncImageView(url: URL(string: ""))
             
-            VStack(spacing: 8) {
-                Text("Profile Picture")
-                    .bold()
+            VStack (spacing: 16) {
                 Text("Saudi")
-            }
-            .font(.subheadline)
-            
-            VStack(spacing: 16) {
-                CustomTextField(hint: "", value: .constant("\(vm.user.name ?? "")"), canEdit: false)
-                CustomDatePicker(title: "Date of birth", hint: "Please Select", selectedDate: $vm.dob)
+                .font(.subheadline)
                 
-                SegmentedTabView(selectedTab: $vm.gender)
-                
-                PrimaryButton(title: "Save", foregroundColor: .appPrimary, backgroundColor: Color.white.gradient) {
-                    Task { await vm.updateUser() }
+                VStack(spacing: 16) {
+                    CustomTextField(hint: "", value: .constant("\(vm.user.name ?? "")"), canEdit: false)
+                    
+                    HStack {
+                        Text(AppMgr.shared.department.strValue)
+                            .bold()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundStyle(.appPrimary)
+                    .background(.white, in: .rect(cornerRadius: 16))
+                    
+                    SegmentedTabView(selectedTab: $vm.gender)
+                        .allowsHitTesting(false)
                 }
-                .frame(width: UIScreen.main.bounds.width/3)
+                .padding(40)
+                .background(LinearGradient.primary, in: .rect(cornerRadii: .init(topLeading: 8, bottomLeading: 56, bottomTrailing: 56, topTrailing: 8)))
             }
-            .padding(40)
-            .background(LinearGradient.primary, in: .rect(cornerRadii: .init(topLeading: 8, bottomLeading: 56, bottomTrailing: 56, topTrailing: 8)))
         }
     }
 }

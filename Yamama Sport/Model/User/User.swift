@@ -14,7 +14,7 @@ struct User: Codable, Identifiable {
     var phone: String?
     var gender: Gender?
     var roles: [UserRole]?
-    var department: String?
+    var department: Department?
     
     var emailVerifiedAt: String?
     var createdAt: String?
@@ -43,7 +43,7 @@ struct User: Codable, Identifiable {
         email = try? container.decode(String.self, forKey: .email)
         phone = try? container.decode(String.self, forKey: .phone)
         roles = try? container.decode([UserRole].self, forKey: .roles)
-        department = try? container.decode(String.self, forKey: .department)
+        department = try? container.decode(Department.self, forKey: .department)
         
         emailVerifiedAt = try? container.decode(String.self, forKey: .emailVerifiedAt)
         createdAt = try? container.decode(String.self, forKey: .createdAt)

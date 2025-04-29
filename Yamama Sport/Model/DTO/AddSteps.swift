@@ -8,10 +8,10 @@
 import Foundation
 
 struct AddStepsRequest: Codable {
-    var eventId: String
-    var eventBranchId: String
+    var eventId: Int = 6
+    var eventBranchId: Int
     var steps: String
-    var calories: String
+    var calories: String?
 }
 
 struct AddStepsResponse: Codable {

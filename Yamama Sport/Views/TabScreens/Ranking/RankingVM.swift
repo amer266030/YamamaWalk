@@ -18,6 +18,7 @@ class RankingVM: ObservableObject {
         x.popupMgr.showLoading()
         defer { x.popupMgr.dismissLoading() }
         
+        allUsers = [x.mockData.currentUser!]
         do {
 //            let request =  GetUsersRequest()
 //            let response: GetUsersResponse = try await ProfileAPI.sendRequest(to: .getUsers(GetUsersRequest.self), body: request)

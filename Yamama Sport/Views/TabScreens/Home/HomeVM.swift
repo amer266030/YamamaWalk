@@ -5,68 +5,72 @@
 //  Created by Amer Alyusuf on 22/04/2025.
 //
 
-import Foundation
+import SwiftUI
 
 class HomeVM: ObservableObject {
     private let x = DIContainer.shared
     @Published var events = EventsResponse()
-    @Published var weekSteps: Int?
-    @Published var monthSteps: Int?
-    @Published var weekCalories: Int?
-    @Published var monthCalories: Int?
+    @Published var liveStepCount: Int = 0
+    @AppStorage("lastSyncAt") var lastSyncAt: String = ""
+    @AppStorage("totalSteps") var totalSteps: Int = 0
     
-    init() {}
+    var syncDate: Date? {
+        if lastSyncAt.isEmpty { updateSyncDate() }
+        let formatter = ISO8601DateFormatter()
+        return formatter.date(from: lastSyncAt)
+    }
+    
+    init() { }
+    
+    // MARK: - Helper Function
+    
+    func updateSyncDate() {
+        let formatter = ISO8601DateFormatter()
+        lastSyncAt = formatter.string(from: Date())
+    }
     
     // MARK: - HealthKit
     
     @MainActor
-    func fetchStepsAndCalories(forPastDays days: Int) async {
-        async let weekSteps = try? x.healthKit.fetchSteps(forPastDays: 7)
-        async let monthSteps = try? x.healthKit.fetchSteps(forPastDays: 30)
-        async let weekCalories = try? x.healthKit.fetchCalories(forPastDays: 7)
-        async let monthCalories = try? x.healthKit.fetchCalories(forPastDays: 30)
-        
-        self.weekSteps = await weekSteps ?? 0
-        self.monthSteps = await monthSteps ?? 0
-        self.weekCalories = await weekCalories ?? 0
-        self.monthCalories = await monthCalories ?? 0
-    }
+    func startLiveTracking() async {
+        guard let since = syncDate else { return }
 
-    // MARK: - API
-    
-    @MainActor
-    func fetchEvent() async {
-        x.popupMgr.showLoading()
-        defer { x.popupMgr.dismissLoading() }
-        
         do {
-            let response: EventsResponse = try await EventAPI.sendRequest(to: .events)
-            self.events = response
-        } catch let error as NetworkError {
-            if error == NetworkError.simulatorError {
-                // Implement MockData for Events
-            } else {
-                x.popupMgr.showAppAlert(for: AppAlert.httpError(error))
+            if let initialSteps = try await x.healthKit.fetchSteps(since: since) {
+                DispatchQueue.main.async {
+                    self.liveStepCount = initialSteps
+                }
+                x.healthKit.startLiveStepUpdates(from: initialSteps, since: since) { newLiveSteps in
+                    self.liveStepCount = initialSteps + newLiveSteps
+                }
             }
         } catch {
-            x.popupMgr.showAppAlert(for: AppAlert.unexpected(error))
+            x.popupMgr.showAppAlert(for: AppAlert.healthKitError(error))
         }
     }
     
+    // MARK: - API
+    
     @MainActor
-    private func updateSteps() async {
+    func addSteps() async throws {
         x.popupMgr.showLoading()
         defer { x.popupMgr.dismissLoading() }
         
+        let branchId: Int = x.appMgr.department.intValue
+        
         do {
-            guard let monthSteps, let monthCalories else { throw StepsError.missingStepsData }
-            
-            let request = AddStepsRequest(eventId: "", eventBranchId: "", steps: "\(monthSteps)", calories: "\(monthCalories)")
-            let response: AddStepsResponse = try await StepsAPI.sendRequest(to: .addSteps, body: request)
-            
+            let totalSteps = totalSteps + liveStepCount
+            let request = AddStepsRequest(eventBranchId: branchId, steps: "\(totalSteps)", calories: nil)
+            let _: AddStepsResponse = try await StepsAPI.sendRequest(to: .addSteps, body: request)
+            self.totalSteps += liveStepCount
+            self.liveStepCount = 0
+            updateSyncDate()
         } catch let error as NetworkError {
             if error == NetworkError.simulatorError {
-                // Implement MockData for Events
+                liveStepCount += 1
+                self.totalSteps += liveStepCount
+                self.liveStepCount = 0
+                updateSyncDate()
             } else {
                 x.popupMgr.showAppAlert(for: AppAlert.httpError(error))
             }

@@ -23,9 +23,9 @@ class PopupMgr: ObservableObject {
     @Published var alertIconName: String = "info.circle"
     @Published var alertIconColor: Color = .red
     // Title
-    @Published var alertTitle: String = ""
+    @Published var alertTitle: LocalizedStringKey = ""
     // Msg
-    @Published var alertMsg: String = ""
+    @Published var alertMsg: LocalizedStringKey = ""
     // Buttons
     @Published var alertSecondaryBtnTitle: String?
     @Published var alertSecondaryBtnAction: (() -> Void)?

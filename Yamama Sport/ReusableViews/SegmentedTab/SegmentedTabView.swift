@@ -27,15 +27,22 @@ struct SegmentedTabView<T: TabItemProtocol>: View {
                         .fontWeight(.semibold)
                         .lineLimit(1)
                         .minimumScaleFactor(0.75)
-                        .foregroundStyle(isSelected ? .text : .gray)
+                        .foregroundStyle(isSelected ? .appPrimary : .white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
-                        .background(.bg)
+                        .background {
+                            if isSelected {
+                                Capsule()
+                                    .fill(.white)
+                            } else {
+                                Capsule()
+                                    .stroke(.white, lineWidth: 1)
+                            }
+                            
+                        }
                 }
             }
         }
-        .padding(4)
-        .background(.white, in: Capsule())
     }
 }
 

@@ -12,16 +12,18 @@ struct HomeView: View {
     
     var body: some View {
         VStack (alignment: .leading, spacing: 32) {
+            SyncStepsView(vm: vm) { Task { try await vm.addSteps() } }
+            
             LazyVGrid(columns: createGridItems(2), spacing: 16) {
-                StepsCardView(title: "Steps in the past 7 days", steps: vm.weekSteps ?? 0)
-                StepsCardView(title: "Total Steps", steps: vm.monthSteps ?? 0)
+                StepsCardView(title: "Synced Steps", steps: vm.totalSteps)
+                StepsCardView(title: "New Steps", steps: vm.liveStepCount)
             }
+            
             PositionCardView(title: "Your position compared to your colleagues", position: "Fourth")
         }
         .onAppear {
             Task {
-                await vm.fetchStepsAndCalories(forPastDays: 7)
-//                await vm.fetchEvent()
+                await vm.startLiveTracking()
             }
         }
     }

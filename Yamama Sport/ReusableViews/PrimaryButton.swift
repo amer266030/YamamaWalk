@@ -11,7 +11,7 @@ struct PrimaryButton: View {
     var title: LocalizedStringKey
     var animation: Animation = .easeOut(duration: 0.5)
     var foregroundColor: Color = .white
-    var backgroundColor: AnyGradient = Color.blue.gradient
+    var backgroundColor: AnyGradient = Color.indigo.gradient
     var action: () -> Void
     
     var body: some View {
@@ -31,7 +31,7 @@ struct PrimaryButton: View {
             .frame(maxWidth: .infinity)
             .foregroundStyle(foregroundColor)
             .background {
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(backgroundColor)
             }
         }

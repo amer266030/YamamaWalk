@@ -19,7 +19,7 @@ struct RegisterView: View {
             VStack {
                 ScrollView(.vertical) {
                     VStack(alignment: .leading, spacing: 40) {
-                        LogoView()
+                        LogoView(padding: 40)
                         RegisterFormView(vm: vm)
                         AlreadyRegisteredView(vm: vm)
                     }

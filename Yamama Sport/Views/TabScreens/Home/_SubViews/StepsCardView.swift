@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StepsCardView: View {
-    var title: String
+    var title: LocalizedStringKey
     var steps: Int
     
     var body: some View {
