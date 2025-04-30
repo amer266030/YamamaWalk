@@ -20,10 +20,10 @@ enum Department: String, Codable, Identifiable, CaseIterable {
         }
     }
     
-    var intValue: Int {
+    var intValue: String {
         switch self {
-        case .headOffice: 6
-        case .factory: 7
+        case .headOffice: "1"
+        case .factory: "2"
         }
     }
     

@@ -26,7 +26,8 @@ final class AppMgr {
     }
     
     func storeAccessToken(_ accessToken: String) {
-        keychain.set(accessToken, forKey: UserKeys.accessToken)
+        let bearer = "Bearer \(accessToken)"
+        keychain.set(bearer, forKey: UserKeys.accessToken)
     }
     
     func getAccessToken() -> String {

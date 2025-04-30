@@ -9,15 +9,12 @@ import Foundation
 
 enum StepsPathParam {
     case addSteps
-    case stepCounters
     case getRanking
     
     var path: String {
         switch self {
         case .addSteps:
             return "steps-counters"
-        case .stepCounters:
-            return "step-counters"
         case .getRanking:
             return "steps-counters/rank"
         }
@@ -26,7 +23,7 @@ enum StepsPathParam {
     var isPostRequest: Bool {
         switch self {
         case .addSteps: true
-        case .stepCounters, .getRanking: false
+        case .getRanking: false
         }
     }
 }

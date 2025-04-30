@@ -10,6 +10,6 @@ import Foundation
 struct Results<dataT: Decodable>: Decodable {
     var status: String?
     var message: String?
-    var errors: ErrorResponse?
+    var errors: String?
     var data: dataT?
 }

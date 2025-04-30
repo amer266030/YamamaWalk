@@ -14,6 +14,7 @@ class HomeVM: ObservableObject {
     @AppStorage("lastSyncAt") var lastSyncAt: String = ""
     @AppStorage("totalSteps") var totalSteps: Int = 0
     
+    @MainActor
     var syncDate: Date? {
         if lastSyncAt.isEmpty { updateSyncDate() }
         let formatter = ISO8601DateFormatter()
@@ -24,6 +25,7 @@ class HomeVM: ObservableObject {
     
     // MARK: - Helper Function
     
+    @MainActor
     func updateSyncDate() {
         let formatter = ISO8601DateFormatter()
         lastSyncAt = formatter.string(from: Date())
@@ -56,11 +58,11 @@ class HomeVM: ObservableObject {
         x.popupMgr.showLoading()
         defer { x.popupMgr.dismissLoading() }
         
-        let branchId: Int = x.appMgr.department.intValue
+        let branchId: String = x.appMgr.department.intValue
         
         do {
             let totalSteps = totalSteps + liveStepCount
-            let request = AddStepsRequest(eventBranchId: branchId, steps: "\(totalSteps)", calories: nil)
+            let request = AddStepsRequest(event_branch_id: branchId, steps: "\(totalSteps)")
             let _: AddStepsResponse = try await StepsAPI.sendRequest(to: .addSteps, body: request)
             self.totalSteps += liveStepCount
             self.liveStepCount = 0

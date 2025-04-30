@@ -17,24 +17,13 @@ struct StepsAPI {
         return params.map { URLQueryItem(name: $0.key.rawValue, value: $0.value) }
     }
     
-    static func buildURL(path: StepsPathParam? = nil, queryParams: [URLQueryItem] = []) -> URL? {
-        var urlString = baseURL
-        if let path = path {
-            urlString += "/\(path.path)"
-        }
-
-        var components = URLComponents(string: urlString)
-        
-        if !queryParams.isEmpty {
-            components?.queryItems = queryParams
-        }
-
-        return components?.url
+    private static func buildURL(path: StepsPathParam) -> URL? {
+        return URL(string: "\(baseURL)/\(path.path)")
     }
     
     static func sendRequest<T: Codable, U: Codable>(to path: StepsPathParam, body: T? = nil, with queryParams: [URLQueryItem] = []) async throws -> U {
         
-        guard let url = buildURL(path: path, queryParams: queryParams) else {
+        guard let url = buildURL(path: path) else {
             throw NetworkError.badRequest
         }
         
@@ -50,10 +39,10 @@ struct StepsAPI {
             let requestData = try JSONEncoder().encode(body)
             resource = Resource(url: url, method: .post(requestData), headers: requestHeaders, modelType: U.self)
         } else {
-            resource = Resource(url: url, method: .get([]), headers: requestHeaders, modelType: U.self)
+            resource = Resource(url: url, method: .get(queryParams), headers: requestHeaders, modelType: U.self)
         }
         
         return try await httpClient.load(resource)
     }
-
+    
 }

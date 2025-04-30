@@ -10,9 +10,14 @@ import Foundation
 class LoginVM: ObservableObject {
     private let x = DIContainer.shared
     
-    @Published var email: String = "j@example.com"
+    @Published var email: String = "amer@yamamacement.com"
     @Published var password: String = "Qwerty123?"
     @Published var isEmailValid = true
+    
+    init() {
+        self.email = x.appMgr.email
+        self.password = x.appMgr.pwd
+    }
     
     @MainActor
     func login() async throws {
@@ -30,6 +35,8 @@ class LoginVM: ObservableObject {
             
             x.appMgr.storeAccessToken(accessToken)
             x.appMgr.currentUser = response.user
+            x.appMgr.email = email
+            x.appMgr.pwd = password
             
             x.navMgr.push(.tabBar)
         } catch let error as AuthError {

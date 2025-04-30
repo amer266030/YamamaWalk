@@ -10,7 +10,7 @@ import Foundation
 enum NetworkError: Error, Equatable {
     case badRequest
     case decodingError(Error)
-    case errorResponse(ErrorResponse)
+    case errorResponse(String?)
     case invalidResponse
     case noConnection
     case simulatorError
@@ -37,8 +37,8 @@ extension NetworkError: LocalizedError {
             return "Bad Request"
         case .decodingError(let error):
             return "\(error.localizedDescription)"
-        case .errorResponse(let error):
-            return "\(error.localizedDescription)"
+        case .errorResponse(let errorStr):
+            return "\(errorStr ?? "")"
         case .invalidResponse:
             return "Invalid Response"
         case .noConnection:

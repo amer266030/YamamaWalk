@@ -38,6 +38,8 @@ class RegisterVM: ObservableObject {
             
             x.appMgr.storeAccessToken(accessToken)
             x.appMgr.currentUser = response.user
+            x.appMgr.email = email
+            x.appMgr.pwd = password
             x.appMgr.department = self.department
             
             x.navMgr.push(.tabBar)

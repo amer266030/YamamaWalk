@@ -50,7 +50,7 @@ struct CustomTextField: View {
                 
                 ZStack {
                     Group {
-                        if type == .pwd {
+                        if type == .pwd && !showPwd {
                             SecureField(hint, text: $value)
                         } else {
                             TextField(hint, text: $value)
