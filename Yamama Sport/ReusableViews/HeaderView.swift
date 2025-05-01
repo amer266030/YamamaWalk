@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HeaderView: View {
     var title: LocalizedStringKey
-    var action: () -> Void
     
     var body: some View {
         HStack(alignment: .top) {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AsyncImageView: View {
-    var url: URL?
+    var url: URL? = nil
     
     var body: some View {
         AnimatedButton {

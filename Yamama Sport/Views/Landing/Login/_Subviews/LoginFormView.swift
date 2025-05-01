@@ -20,7 +20,7 @@ struct LoginFormView: View {
         CustomTextField(hint: "email", value: $vm.email, type: .email) { isValid in
             vm.isEmailValid = isValid
         }
-        CustomTextField(hint: "password", value: $vm.password, characterLimit: 12, hintIcon: "lock.fill")
+        CustomTextField(hint: "password", value: $vm.password, type: .pwd, characterLimit: 12, hintIcon: "lock.fill")
         
         PrimaryButton(title: "Login") {
             Task { try await vm.login() }

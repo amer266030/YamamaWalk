@@ -4,7 +4,7 @@
     "" : {
 
     },
-    "* %@" : {
+    "* " : {
 
     },
     "%@" : {
@@ -12,6 +12,16 @@
     },
     "%lld" : {
 
+    },
+    "%lld%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld%2$@"
+          }
+        }
+      }
     },
     "5* *** ****" : {
       "localizations" : {
@@ -22,12 +32,6 @@
           }
         }
       }
-    },
-    "5th" : {
-
-    },
-    "200" : {
-
     },
     "Already Registered?" : {
       "localizations" : {
@@ -191,12 +195,42 @@
         }
       }
     },
+    "Invalid email format" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البريد الإلكتروني غير صالح"
+          }
+        }
+      }
+    },
     "Invalid Password" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "كلمة المرور غير صالحة"
+          }
+        }
+      }
+    },
+    "Invalid phone number" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم الهاتف غير صالح"
+          }
+        }
+      }
+    },
+    "last" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأخير"
           }
         }
       }
@@ -357,6 +391,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الخطوات المُرسلة"
+          }
+        }
+      }
+    },
+    "This field cannot be empty" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يمكن أن يكون هذا الحقل فارغا"
           }
         }
       }

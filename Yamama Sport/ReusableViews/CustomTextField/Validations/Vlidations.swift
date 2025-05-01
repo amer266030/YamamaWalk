@@ -5,10 +5,10 @@
 //  Created by Amer Alyusuf on 22/04/2025.
 //
 
-import Foundation
+import SwiftUI
 
 class Validations {
-    static func validate(type: ValidationsType) -> String? {
+    static func validate(type: ValidationsType) -> LocalizedStringKey? {
         switch type {
         case .email(value: let value):
             return validateEmail(value) ? nil : "Invalid email format"

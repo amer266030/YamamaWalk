@@ -18,9 +18,7 @@ struct TabScreenView: View {
                 .ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 24) {
-                HeaderView(title: vm.selectedTab.title) {
-                    Task { await vm.logout() }
-                }
+                HeaderView(title: vm.selectedTab.title)
 
                 ScrollView(.vertical) {
                     selectedTab.view

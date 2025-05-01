@@ -26,7 +26,7 @@ struct AuthAPI {
         let requestData = try JSONEncoder().encode(body)
         
         let requestHeaders = [
-            "Authorization": "Bearer \(appMgr.getAccessToken())",
+            "Authorization": "\(appMgr.getAccessToken())",
             "Content-Type": "application/json",
             "Accept": "*/*"
         ]

@@ -13,20 +13,20 @@ struct SyncStepsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            AnimatedButton {
-                action()
-            } label: {
-                Label("Sync Steps", systemImage: "arrow.trianglehead.2.clockwise.rotate.90.circle.fill")
-                    .font(.footnote)
-                    .foregroundStyle(.white)
-                    .padding(8)
-                    .background(.indigo, in: .rect(cornerRadius: 8))
+            if vm.liveStepCount > 0 {
+                AnimatedButton {
+                    action()
+                } label: {
+                    Label("Sync Steps", systemImage: "arrow.trianglehead.2.clockwise.rotate.90.circle.fill")
+                        .font(.footnote)
+                        .foregroundStyle(.white)
+                        .padding(8)
+                        .background(.indigo, in: .rect(cornerRadius: 8))
+                }
             }
-            
-            if let date = vm.syncDate {
-                Text("Last Update: \(vm.syncDate != nil ? date.formatted(date: .abbreviated, time: .shortened) : "")")
-                    .font(.caption)
-            }
+
+            Text("Last Update: \(vm.syncDate.formatted(date: .abbreviated, time: .shortened))")
+                .font(.caption)
         }
     }
 }

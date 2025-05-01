@@ -12,7 +12,7 @@ struct RankingView: View {
     
     var body: some View {
         VStack (spacing: 32) {
-            ForEach(vm.allUsers) { user in
+            ForEach(vm.rankList) { user in
                 UserRankCardView(user: user)
             }
             
@@ -32,7 +32,7 @@ struct RankingView: View {
                 .background(.appSecondary, in: .rect(cornerRadius: 8))
             }
         }
-        .onAppear { Task { await vm.getUsers() } }
+        .onAppear { Task { await vm.getRanking() } }
     }
 }
 

@@ -8,19 +8,13 @@
 import SwiftUI
 
 struct UserRankCardView: View {
-    var user: User
+    var user: UserRanking
     
     var body: some View {
         VStack(spacing: 16) {
             // Header
             HStack {
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .frame(width: 18, height: 18)
-                    .foregroundStyle(.bg)
-                    .padding()
-                    .background(LinearGradient.primary, in: .circle)
-                    .gridCellColumns(1)
+                AsyncImageView()
                 
                 VStack(alignment: .leading, spacing: 16) {
                     Text(user.name ?? "")
@@ -37,15 +31,15 @@ struct UserRankCardView: View {
             }
             // Info Items
             HStack {
-                infoItemView(title: "Steps Count", value: "200")
+                infoItemView(title: "Steps Count", value: "\(user.totalSteps ?? 0)")
                 Divider()
                     .frame(width: 2, height: 40)
                     .background(.gray.opacity(0.2))
-                infoItemView(title: "Department", value: Department.factory.strValue)
+                infoItemView(title: "Department", value: user.branch?.department.strValue ?? "")
                 Divider()
                     .frame(width: 2, height: 40)
                     .background(.gray.opacity(0.2))
-                infoItemView(title: "Position", value: "5th")
+                infoItemView(title: "Position", value: "\(user.rank ?? 0)")
             }
         }
         .padding()
@@ -56,8 +50,6 @@ struct UserRankCardView: View {
                         .shadow(.inner(color: .black.opacity(0.5), radius: 2, x: 0, y: -2))
                         .shadow(.drop(color: .black.opacity(0.2), radius: 3, x: 0, y: 2))
                 )
-            
-            
         }
         
     }
@@ -79,9 +71,9 @@ fileprivate func infoItemView(title: LocalizedStringKey, value: LocalizedStringK
     .frame(maxWidth: .infinity)
 }
 
-#Preview {
-    let x = DIContainer.shared
-    
-    UserRankCardView(user: x.mockData.currentUser ?? User())
-        .padding()
-}
+//#Preview {
+//    let x = DIContainer.shared
+//    
+//    UserRankCardView(user: UserRanking())
+//        .padding()
+//}

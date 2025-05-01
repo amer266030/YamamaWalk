@@ -21,20 +21,4 @@ class TabScreenVM: ObservableObject {
         if tab != selectedTab { selectedTab = tab }
     }
     
-    @MainActor
-    func logout() async {
-        do {
-            let request = LogoutRequest()
-            let _: LogoutResponse = try await AuthAPI.sendRequest(to: .logout(LogoutRequest.self), body: request)
-            
-            x.appMgr.currentUser = nil
-            x.navMgr.reset()
-        } catch let error as NetworkError {
-            if error == NetworkError.simulatorError { x.navMgr.reset() } else {
-                x.popupMgr.showAppAlert(for: AppAlert.httpError(error))
-            }
-        } catch {
-            x.popupMgr.showAppAlert(for: AppAlert.unexpected(error))
-        }
-    }
 }

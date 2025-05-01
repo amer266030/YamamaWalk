@@ -19,17 +19,8 @@ struct ProfileView: View {
                 .font(.subheadline)
                 
                 VStack(spacing: 16) {
-                    CustomTextField(hint: "", value: .constant("\(vm.user.name ?? "")"), canEdit: false)
-                    
-                    HStack {
-                        Text(AppMgr.shared.department.strValue)
-                            .bold()
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundStyle(.appPrimary)
-                    .background(.white, in: .rect(cornerRadius: 16))
-                    
+                    listInfoItem("\(vm.user.name ?? "")")
+                    listInfoItem(AppMgr.shared.department.strValue)
                     SegmentedTabView(selectedTab: $vm.gender)
                         .allowsHitTesting(false)
                 }
@@ -39,6 +30,18 @@ struct ProfileView: View {
         }
     }
 }
+
+fileprivate func listInfoItem(_ title: LocalizedStringKey) -> some View {
+    HStack {
+        Text(title)
+            .bold()
+    }
+    .frame(maxWidth: .infinity)
+    .padding()
+    .foregroundStyle(.appPrimary)
+    .background(.white, in: .rect(cornerRadius: 16))
+}
+
 
 #Preview {
     let x = DIContainer.shared

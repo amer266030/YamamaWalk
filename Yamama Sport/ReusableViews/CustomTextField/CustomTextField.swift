@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomTextField: View {
     @State private var showError = false
-    @State private var errorMessage: String?
+    @State private var errorMessage: LocalizedStringKey?
     
     @State private var showPwd = false
     
@@ -29,9 +29,10 @@ struct CustomTextField: View {
         VStack(alignment: .leading) {
             // MARK: - Error Message
             if let errorMessage {
-                Text("* \(errorMessage)")
-                    .font(.caption)
-                    .foregroundStyle(symbolColor)
+                Group {
+                    Text("* ").font(.caption) + Text(errorMessage).font(.caption)
+                }
+                .foregroundStyle(.red)
             }
             
             // MARK: - TextField
@@ -41,12 +42,6 @@ struct CustomTextField: View {
                     .font(.title3)
                     .bold()
                     .foregroundStyle(.text)
-                
-//                if type == .phone {
-//                    Text("+966")
-//                        .font(.subheadline)
-//                        .foregroundStyle(.black)
-//                }
                 
                 ZStack {
                     Group {
@@ -74,7 +69,6 @@ struct CustomTextField: View {
                                 .foregroundStyle(symbolColor)
                         }
                         .padding(4)
-                        .environment(\.layoutDirection, .leftToRight)
                     }
                     
                     if type == .pwd {

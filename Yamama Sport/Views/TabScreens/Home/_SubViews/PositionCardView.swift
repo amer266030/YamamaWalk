@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PositionCardView: View {
     var title: LocalizedStringKey
-    var position: String
+    var position: LocalizedStringKey
     
     var body: some View {
         RoundedRectangle(cornerRadius: 16)

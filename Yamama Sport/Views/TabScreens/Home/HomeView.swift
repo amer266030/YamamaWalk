@@ -15,11 +15,11 @@ struct HomeView: View {
             SyncStepsView(vm: vm) { Task { try await vm.addSteps() } }
             
             LazyVGrid(columns: createGridItems(2), spacing: 16) {
-                StepsCardView(title: "Synced Steps", steps: vm.totalSteps)
-                StepsCardView(title: "New Steps", steps: vm.liveStepCount)
+                StepsCardView(title: "Synced Steps", steps: $vm.totalSteps)
+                StepsCardView(title: "New Steps", steps: $vm.liveStepCount)
             }
             
-            PositionCardView(title: "Your position compared to your colleagues", position: "Fourth")
+            PositionCardView(title: "Your position compared to your colleagues", position: vm.rankString)
         }
         .onAppear {
             Task {

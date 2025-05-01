@@ -15,6 +15,7 @@ struct User: Codable, Identifiable {
     var gender: Gender?
     var roles: [UserRole]?
     var department: Department?
+    var rank: String?
     
     var emailVerifiedAt: String?
     var createdAt: String?

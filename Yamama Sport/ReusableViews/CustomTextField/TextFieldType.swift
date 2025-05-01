@@ -5,7 +5,7 @@
 //  Created by Amer Alyusuf on 22/04/2025.
 //
 
-import UIKit
+import SwiftUI
 
 enum TextFieldType {
     case email
@@ -27,15 +27,15 @@ enum TextFieldType {
         }
     }
     
-    func validate(value: String) -> String? {
+    func validate(value: String) -> LocalizedStringKey? {
         switch self {
         case .email:
             return Validations.validate(type: .email(value))
         case .phone:
             return Validations.validate(type: .phone(value))
-        case .numbers:
+        case .numbers, .pwd:
             return Validations.validate(type: .none)
-        case .standard, .pwd:
+        case .standard:
             return Validations.validate(type: .nonEmpty(value))
         }
     }

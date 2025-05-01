@@ -25,6 +25,7 @@ struct RegisterView: View {
                     }
                     .padding(32)
                 }
+                .scrollIndicators(.hidden)
             }
         }
         .onTapGesture { dismissKeyboard() }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StepsCardView: View {
     var title: LocalizedStringKey
-    var steps: Int
+    @Binding var steps: Int
     
     var body: some View {
         VStack(spacing: 16) {

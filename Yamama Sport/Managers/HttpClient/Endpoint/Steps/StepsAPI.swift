@@ -30,7 +30,7 @@ struct StepsAPI {
         let requestHeaders = [
             "Content-Type": "application/json",
             "lang": "en",
-            "token": appMgr.getAccessToken(),
+            "Authorization": appMgr.getAccessToken(),
         ]
         
         let resource: Resource<U>

@@ -9,47 +9,72 @@ import SwiftUI
 
 class HomeVM: ObservableObject {
     private let x = DIContainer.shared
-    @Published var events = EventsResponse()
+    @Published var currentRank: Int?
     @Published var liveStepCount: Int = 0
     @AppStorage("lastSyncAt") var lastSyncAt: String = ""
     @AppStorage("totalSteps") var totalSteps: Int = 0
+    var rankString: LocalizedStringKey { rankString(currentRank) }
     
     @MainActor
-    var syncDate: Date? {
+    var syncDate: Date {
         if lastSyncAt.isEmpty { updateSyncDate() }
         let formatter = ISO8601DateFormatter()
-        return formatter.date(from: lastSyncAt)
+        return formatter.date(from: lastSyncAt) ?? .now
     }
     
     init() { }
     
-    // MARK: - Helper Function
+    // MARK: - Helper Functions
     
     @MainActor
     func updateSyncDate() {
         let formatter = ISO8601DateFormatter()
-        lastSyncAt = formatter.string(from: Date())
+        lastSyncAt = formatter.string(from: Date.now)
+    }
+    
+    private func rankString(_ rank: Int?) -> LocalizedStringKey {
+        guard let rank = rank else { return "last" }
+
+        let suffix: String
+        let ones = rank % 10
+        let tens = (rank / 10) % 10
+
+        if tens == 1 {
+            suffix = "th"
+        } else {
+            switch ones {
+            case 1: suffix = "st"
+            case 2: suffix = "nd"
+            case 3: suffix = "rd"
+            default: suffix = "th"
+            }
+        }
+
+        return "\(rank)\(suffix)"
     }
     
     // MARK: - HealthKit
     
     @MainActor
     func startLiveTracking() async {
-        guard let since = syncDate else { return }
+        let since = syncDate
 
         do {
             if let initialSteps = try await x.healthKit.fetchSteps(since: since) {
-                DispatchQueue.main.async {
-                    self.liveStepCount = initialSteps
-                }
+                self.liveStepCount = initialSteps
+
                 x.healthKit.startLiveStepUpdates(from: initialSteps, since: since) { newLiveSteps in
-                    self.liveStepCount = initialSteps + newLiveSteps
+                    print("New steps:", newLiveSteps)
+                    Task { @MainActor in
+                        self.liveStepCount = initialSteps + newLiveSteps
+                    }
                 }
             }
         } catch {
             x.popupMgr.showAppAlert(for: AppAlert.healthKitError(error))
         }
     }
+
     
     // MARK: - API
     
@@ -63,9 +88,12 @@ class HomeVM: ObservableObject {
         do {
             let totalSteps = totalSteps + liveStepCount
             let request = AddStepsRequest(event_branch_id: branchId, steps: "\(totalSteps)")
-            let _: AddStepsResponse = try await StepsAPI.sendRequest(to: .addSteps, body: request)
+            let response: AddStepsResponse = try await StepsAPI.sendRequest(to: .addSteps, body: request)
+            
+            self.currentRank = response.rank
             self.totalSteps += liveStepCount
             self.liveStepCount = 0
+            
             updateSyncDate()
         } catch let error as NetworkError {
             if error == NetworkError.simulatorError {

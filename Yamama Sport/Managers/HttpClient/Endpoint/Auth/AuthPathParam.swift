@@ -10,7 +10,6 @@ import Foundation
 enum AuthPathParam {
     case login(LoginRequest.Type)
     case register(RegisterRequest.Type)
-    case logout(LogoutRequest.Type)
 
     var path: String {
         switch self {
@@ -18,8 +17,6 @@ enum AuthPathParam {
             return "login"
         case .register:
             return "signup"
-        case .logout:
-            return "logout"
         }
     }
 }
